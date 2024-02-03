@@ -54,3 +54,13 @@ def update_user(user_id: int, user: UserSchema):
     database[user_id - 1] = user_with_id
 
     return user_with_id
+
+
+@app.delete('/users/{user_id}', status_code=200, response_model=Message)
+def delete_user(user_id: int):
+    if user_id > len(database) or user_id < 1:
+        raise HTTPException(status_code=404, detail='User not found')
+
+    del database[user_id - 1]
+
+    return {'message': 'você foi eliminaaade'}
