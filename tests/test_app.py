@@ -102,6 +102,24 @@ def test_update_user_not_found(client):
     assert response.json() == {'detail': 'User not found'}
 
 
+def test_read_user(client):
+    response = client.get('/users/1')
+
+    assert response.status_code == 200
+    assert response.json() == {
+        'id': 1,
+        'username': 'bob',
+        'email': 'bob@example.com',
+    }
+
+
+def test_read_user_not_found(client):
+    response = client.get('/users/2')
+
+    assert response.status_code == 404
+    assert response.json() == {'detail': 'User not found'}
+
+
 def test_delete(client):
     response = client.delete('/users/1')
 
